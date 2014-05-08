@@ -46,3 +46,6 @@ Conclusion
 After this lab I have gotten pretty good at creating and manipulating ROM and I am confident that if given more time I could create a game worthy of actual playtime. I have also learned a lot about image processing in matlab and how images are stored.
 
 
+
+Video Available at: http://youtu.be/Vrx255XONXM
+
