@@ -36,6 +36,7 @@ entity atlys_lab_video is
 			  down: in STD_LOGIC;
 			  BTNU: in STD_LOGIC;
 			  BTND: in STD_LOGIC;
+			  SW7:in STD_LOGIC;
            tmds : out  STD_LOGIC_VECTOR (3 downto 0);
            tmdsb : out  STD_LOGIC_VECTOR (3 downto 0));
 end atlys_lab_video;
@@ -93,9 +94,10 @@ begin
 		row => row_sig,
 		column => column_sig,
 		blank => blank,
-		ball_x => ballx_sig,
-		ball_y => bally_sig,
+		clk => clk,
 		paddle_y => paddley_sig,
+		ball_x => ballx_sig,
+		ball_y => bally_sig,			
 		r => red,
 		g => green,
 		b => blue

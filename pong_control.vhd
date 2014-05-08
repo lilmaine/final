@@ -54,11 +54,11 @@ architecture Behavioral of pong_control is
 	signal  paddley_next, count_next : unsigned(10 downto 0);
 	signal count_reg: unsigned(10 downto 0):= "00000000000";	
 	signal paddley_reg: unsigned(10 downto 0) := to_unsigned(240, 11);
-	signal ballx_reg, ballx_next: unsigned(10 downto 0) := to_unsigned(20, 11);
+	signal ballx_reg, ballx_next: unsigned(10 downto 0) := to_unsigned(300, 11);
 	signal bally_reg, bally_next: unsigned(10 downto 0) := to_unsigned(210, 11);
 
 	shared variable x_direction, y_direction: STD_LOGIC := '1';
-	shared variable x_velocity, y_velocity : integer := 1;
+	shared variable x_velocity, y_velocity : integer := -1;
 
 	constant speed : integer := 600;
 	constant HEIGHT : integer := 480;
@@ -176,10 +176,7 @@ process(clk, reset)
 	if(count_reg = speed) then
 		case b_state_reg is
 			when moving =>
-
-				if (ballx_reg >= 625) then
-					b_state_next <= hit_right_wall;
-				elsif (ballx_reg <= 1) then
+				if (ballx_reg <= 1) then
 					b_state_next <= hit_left_wall;
 				end if;
 
@@ -218,18 +215,20 @@ process(clk, reset)
 		if(count_reg = speed) then
 			case b_state_next is
 				when hit_left_wall =>
+						bally_next <= to_unsigned(400,11);
+						ballx_next <= ballx_reg + to_unsigned(x_velocity, 11);					
 				when moving =>
 					if(x_direction = '1' and y_direction = '0') then
-						bally_next <= bally_reg + to_unsigned(y_velocity, 11);
+						bally_next <= bally_reg;
 						ballx_next <= ballx_reg + to_unsigned(x_velocity, 11);
 					elsif(x_direction = '0' and y_direction = '0') then
-						bally_next <= bally_reg + to_unsigned(y_velocity, 11);
+						bally_next <= bally_reg;
 						ballx_next <= ballx_reg - to_unsigned(x_velocity, 11);
 					elsif(x_direction = '0' and y_direction = '1') then
-						bally_next <= bally_reg - to_unsigned(y_velocity, 11);
+						bally_next <= bally_reg;
 						ballx_next <= ballx_reg - to_unsigned(x_velocity, 11);
 					elsif(x_direction = '1' and y_direction = '1') then
-						bally_next <= bally_reg - to_unsigned(y_velocity, 11);
+						bally_next <= bally_reg;
 						ballx_next <= ballx_reg + to_unsigned(x_velocity, 11);
 					end if;
 				when hit_top_wall =>
